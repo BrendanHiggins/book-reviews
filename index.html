@@ -579,6 +579,18 @@
                 setView('library');
             };
 
+            const truncateTitle = (title) => {
+                if (!title) return '';
+                const colonIndex = title.indexOf(':');
+                if (colonIndex > 0) {
+                    return title.substring(0, colonIndex);
+                }
+                if (title.length > 30) {
+                    return title.substring(0, 30) + '...';
+                }
+                return title;
+            };
+
             const SortableHeader = ({ label, columnKey }) => (
                 <th className="p-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-700" onClick={() => handleSort(columnKey)}>
                     <div className="flex items-center">
@@ -650,7 +662,7 @@
                                                             <tr key={book.id} className="hover:bg-gray-700/50 transition-colors duration-150">
                                                                 <td className="p-4 whitespace-nowrap">
                                                                     <div className={`font-medium cursor-pointer ${titleColorClass} hover:opacity-80 flex items-center gap-2`} onClick={() => setSelectedBook(book)}>
-                                                                        <span>{book.title}</span>
+                                                                        <span>{truncateTitle(book.title)}</span>
                                                                         {book.isBookClub && <UsersIcon className="w-4 h-4 text-rose-400 flex-shrink-0" title="Book Club Pick" />}
                                                                     </div>
                                                                 </td>
